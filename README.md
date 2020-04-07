@@ -12,6 +12,6 @@ Demo on Microchip environment with :
 ## Demo MPLAB X IDE
 
 - [x] Create a blank project
-- [ ] Open MCC plugin
+- [x] Open MCC plugin
 - [ ] Choose all peripherals you want to use
 - [ ] Clic on **Generate code**
