@@ -65,6 +65,26 @@
 #define PULL_UP_ENABLED      1
 #define PULL_UP_DISABLED     0
 
+// get/set LED aliases
+#define LED_TRIS                 TRISAbits.TRISA0
+#define LED_LAT                  LATAbits.LATA0
+#define LED_PORT                 PORTAbits.RA0
+#define LED_WPU                  WPUAbits.WPUA0
+#define LED_OD                   ODCONAbits.ODCA0
+#define LED_ANS                  ANSELAbits.ANSA0
+#define LED_SetHigh()            do { LATAbits.LATA0 = 1; } while(0)
+#define LED_SetLow()             do { LATAbits.LATA0 = 0; } while(0)
+#define LED_Toggle()             do { LATAbits.LATA0 = ~LATAbits.LATA0; } while(0)
+#define LED_GetValue()           PORTAbits.RA0
+#define LED_SetDigitalInput()    do { TRISAbits.TRISA0 = 1; } while(0)
+#define LED_SetDigitalOutput()   do { TRISAbits.TRISA0 = 0; } while(0)
+#define LED_SetPullup()          do { WPUAbits.WPUA0 = 1; } while(0)
+#define LED_ResetPullup()        do { WPUAbits.WPUA0 = 0; } while(0)
+#define LED_SetPushPull()        do { ODCONAbits.ODCA0 = 0; } while(0)
+#define LED_SetOpenDrain()       do { ODCONAbits.ODCA0 = 1; } while(0)
+#define LED_SetAnalogMode()      do { ANSELAbits.ANSA0 = 1; } while(0)
+#define LED_SetDigitalMode()     do { ANSELAbits.ANSA0 = 0; } while(0)
+
 // get/set pushButton aliases
 #define pushButton_TRIS                 TRISAbits.TRISA5
 #define pushButton_LAT                  LATAbits.LATA5
