@@ -41,9 +41,14 @@
     SOFTWARE.
  */
 
+#include <bits/alltypes.h>
+
 #include "mcc_generated_files/mcc.h"
 
 #define PRESSED 0
+
+uint32_t counter = 0;
+
 
 /*
                          Main application
@@ -57,10 +62,10 @@ void main( void )
     // Use the following macros to:
 
     // Enable the Global Interrupts
-    //INTERRUPT_GlobalInterruptEnable();
+    INTERRUPT_GlobalInterruptEnable();
 
     // Enable the Peripheral Interrupts
-    //INTERRUPT_PeripheralInterruptEnable();
+    INTERRUPT_PeripheralInterruptEnable();
 
     // Disable the Global Interrupts
     //INTERRUPT_GlobalInterruptDisable();
@@ -73,10 +78,13 @@ void main( void )
         // Add your application code
         if ( PRESSED == pushButton_GetValue( ) )
         {
-
+            LED_Toggle();
+            ++counter;
         }
     }
 }
+
+
 
 
 /**
