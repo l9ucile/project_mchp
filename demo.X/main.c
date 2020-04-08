@@ -47,8 +47,21 @@
 
 #define PRESSED 0
 
+/**
+ * @brief counter the number of LED state from starting
+ */
 uint32_t counter = 0;
 
+/*
+ Serial communication
+
+    Les broches par défaut sont :
+    TX = RC6
+    RX = RC7
+    Pour une utilisation avec la carte MPLAB Xpress Evaluation Boards :
+    TX = RC0 (F188TXU)
+    RX = RC1 (F188RXU)
+ */
 
 /*
                          Main application
@@ -62,10 +75,10 @@ void main( void )
     // Use the following macros to:
 
     // Enable the Global Interrupts
-    INTERRUPT_GlobalInterruptEnable();
+    INTERRUPT_GlobalInterruptEnable( );
 
     // Enable the Peripheral Interrupts
-    INTERRUPT_PeripheralInterruptEnable();
+    INTERRUPT_PeripheralInterruptEnable( );
 
     // Disable the Global Interrupts
     //INTERRUPT_GlobalInterruptDisable();
@@ -75,11 +88,36 @@ void main( void )
 
     while ( 1 )
     {
-        // Add your application code
+        /* Incrémenter le compteur lorsque BP est pressé */
         if ( PRESSED == pushButton_GetValue( ) )
         {
-            LED_Toggle();
+            LED_Toggle( );
             ++counter;
+        }
+
+        /* Traitement d'une donnée en reception du port série */
+        if ( EUSART_is_rx_ready( ) )
+        {
+            /* If there is at least one byte of data has been received. */
+            uint8_t rx_data_from_serial = EUSART_Read( );
+
+            printf( "\r\n" );
+
+            switch ( rx_data_from_serial )
+            {
+                case '?':
+                case ',':
+                    printf( "Send C to get counter value.\r\n" );
+                    break;
+
+                case 'C':
+                case 'c':
+                    printf( "Counter value: %d\r\n", counter );
+                    break;
+                
+                default:
+                    printf( "Cmd not recognised! Send ? for help.\r\n" );
+            }
         }
     }
 }
