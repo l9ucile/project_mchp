@@ -124,6 +124,7 @@ void PIN_MANAGER_Initialize(void)
    
     
 	
+    INTPPS = 0x05;   //RA5->EXT_INT:INT;    
     RC0PPS = 0x10;   //RC0->EUSART:TX;    
     RXPPS = 0x11;   //RC1->EUSART:RX;    
 }

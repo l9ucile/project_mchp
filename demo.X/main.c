@@ -47,6 +47,9 @@
 
 #define PRESSED 0
 
+#define STR_FIRMWARE_DESCRIPTION "Demo for push button and Sleep mode "
+#define STR_FIRMWARE_VERSION     "v0.1"  /* Firmware version */
+
 /**
  * @brief counter the number of LED state from starting
  */
@@ -88,9 +91,15 @@ void main( void )
 
     while ( 1 )
     {
+        /* Pour mesurer le temps d'exécution de la boucle principale
+         * LED_System_Toggle( );
+         */
+        
         /* Incrémenter le compteur lorsque BP est pressé */
         if ( PRESSED == pushButton_GetValue( ) )
         {
+            while ( PRESSED == pushButton_GetValue( ) );
+            __delay_ms( 1 );
             LED_Toggle( );
             ++counter;
         }
@@ -110,11 +119,28 @@ void main( void )
                     printf( "Send C to get counter value.\r\n" );
                     break;
 
+                case 'V':
+                case 'v':
+                    printf( STR_FIRMWARE_DESCRIPTION STR_FIRMWARE_VERSION "\r\n" );
+                    printf( "Build on " __DATE__ " at " __TIME__ "\r\n" );
+                    break;
+
                 case 'C':
                 case 'c':
                     printf( "Counter value: %d\r\n", counter );
                     break;
-                
+
+                case 'S':
+                case 's':
+                    printf( "Enter in Sleep mode...\r\n\n" );
+                    LED_SetLow( );
+                    __delay_ms( 20 );
+                    /* datasheet "8.2.3 LOW-POWER SLEEP MODE" page 156 */
+                    SLEEP( );
+                    __delay_ms( 10 );
+                    printf( "\r\nWake up from Sleep mode!\r\n\n" );
+                    break;
+
                 default:
                     printf( "Cmd not recognised! Send ? for help.\r\n" );
             }
